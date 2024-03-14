@@ -39,23 +39,37 @@ struct AddView: View {
                         Text($0.description)
                     }
                 }
+                //.pickerStyle(.segmented)
                 
                 TextField("Amount",
                           value: $amount,
                           format: .currency(code: currencyCode)
                 )
-                    .keyboardType(.decimalPad)
+                .keyboardType(.decimalPad)
             }
             .navigationTitle("Add new expense")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
             .toolbar {
-                Button("Save") {
-                    let item = ExpenseItem(name: name,
-                                           type: type,
-                                           amount: amount)
-                    expenses.items.append(item)
-                    dismiss()
-                }
+//                ToolbarItem(placement: .confirmationAction){
+                    Button("Save") {
+                        let item = ExpenseItem(name: name,
+                                               type: type,
+                                               amount: amount)
+                        expenses.items.append(item)
+                        dismiss()
+                    }
+//                }
+//                ToolbarItem(placement: .cancellationAction) {
+//                    Button("Cancel", role: .cancel) {
+//                        dismiss()
+//                    }
+//                }
             }
         }
     }
+}
+
+#Preview {
+    AddView(expenses: Expenses())
 }

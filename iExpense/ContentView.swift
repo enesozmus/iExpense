@@ -9,11 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var _expenses = Expenses()
-    @State private var _isShowingAddExpense = false
+    // ✅ challange (project 9)
+    // Change project 7 (iExpense) so that it uses NavigationLink for adding new expenses rather than a sheet.
+    // @State private var _isShowingAddExpense = false
     let currencyCode = Locale.current.currency?.identifier ?? "USD"
     
     var body: some View {
-        NavigationView {
+        // ✅ challange (project 9)
+        // NavigationView {
+        NavigationStack {
             List {
                 ForEach(_expenses.items) { item in
                     HStack {
@@ -40,15 +44,34 @@ struct ContentView: View {
                 }
                 .onDelete(perform: removeItems)
             }
-            .navigationTitle("iExpense")
+            //.navigationTitle("iExpense")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button("Add Expense", systemImage: "plus") {
-                    _isShowingAddExpense = true
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        Image(systemName: "sun.min.fill")
+                        Text("iExpense").font(.largeTitle)
+                        Image(systemName: "sun.min.fill")
+                    }
                 }
+                // ✅ challange (project 9)
+                ToolbarItem {
+                    NavigationLink {
+                        AddView(expenses: _expenses)
+                    } label : {
+                        Label("Add Expense", systemImage: "plus")
+                    }
+                }
+
             }
-            .sheet(isPresented: $_isShowingAddExpense) {
-                AddView(expenses: _expenses)
-            }
+//            .toolbar {
+//                Button("Add Expense", systemImage: "plus") {
+//                    _isShowingAddExpense = true
+//                }
+//            }
+//            .sheet(isPresented: $_isShowingAddExpense) {
+//                AddView(expenses: _expenses)
+//            }
         }
     }
     
